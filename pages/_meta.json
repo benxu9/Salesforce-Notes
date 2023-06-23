@@ -1,22 +1,19 @@
 {
-  "index": "Home",
+  "index": {
+    "title": "Home",
+    "type:": "page"
+  },
   "notes": {
     "title": "Notes",
     "type": "page"
   },
 
-  "salesforce-Certifications": {
+  "salesforce Certifications": {
     "title": "Salesforce Certifications",
     "type": "page"
   },
   "about": {
     "title": "About",
     "type": "page"
-  },
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://twitter.com/shuding_",
-    "newWindow": true
   }
 }
