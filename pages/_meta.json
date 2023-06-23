@@ -1,8 +1,4 @@
 {
-  "index": {
-    "title": "Home",
-    "type:": "page"
-  },
   "notes": {
     "title": "Notes",
     "type": "page"
