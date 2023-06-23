@@ -13,6 +13,8 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Nextra Docs Template',
   },
+  darkMode: true,
+
 }
 
 export default config
