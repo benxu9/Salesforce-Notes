@@ -1,11 +1,11 @@
 {
   "index": "Home",
-  "Notes": {
+  "notes": {
     "title": "Notes",
     "type": "page"
   },
 
-  "Salesforce Certifications": {
+  "salesforce Certifications": {
     "title": "Salesforce Certifications",
     "type": "page"
   },
