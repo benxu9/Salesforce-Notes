@@ -1,8 +1,5 @@
 {
-  "notes": {
-    "title": "Notes",
-    "type": "page"
-  },
+  "index": "Home",
   "salesforce Certifications": {
     "title": "Salesforce Certifications",
     "type": "page"
