@@ -7,6 +7,7 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/shuding/nextra-docs-template',
   },
   docsRepositoryBase: 'https://github.com/benxu9/Salesforce-Notes/tree/main/pages',
+  
 }
 
 export default config
