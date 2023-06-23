@@ -1,7 +1,14 @@
 {
-  "index": "may",
-  "another": "why didn't it update",
-  "advanced": "Advanced (A Folder)",
+  "index": "Home",
+  "Notes": {
+    "title": "Notes",
+    "type": "page"
+  },
+
+  "Salesforce Certifications": {
+    "title": "Salesforce Certifications",
+    "type": "page"
+  },
   "about": {
     "title": "About",
     "type": "page"
