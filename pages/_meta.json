@@ -1,4 +1,8 @@
 {
+  "index": {
+    "title": "Home",
+    "type": "page"
+  },
   "salesforce Certifications": {
     "title": "Salesforce Certifications",
     "type": "page"
