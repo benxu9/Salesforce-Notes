@@ -1,0 +1,67 @@
+# Notes For PD1 Trailhead
+
+## Apex and .Net Basics module
+
+- There are primitive types, such as Integer, Double, Long, Date, Datetime, String, and Boolean. There is also an ID data type that is used for any valid 18-character Lightning Platform record identifier assigned by the system.
+- In Apex all variables are initialized to null by default
+- Apex strings are always treated as a primitive value type.
+- sObject is just a Salesforce object. You can think of it as a table in a database. The sObject can be either a standard one that comes built in with Salesforce or a custom one that you define yourself.
+
+#### List Examples
+
+```
+List<String> myStrings =  new List<String>();
+String[] myStrings = new List<String>();
+List<String> myStrings =  new List<String> {'String1', 'String2', 'String3' };
+```
+
+#### Set Examples
+
+A set is commonly used to store ID values because the value are always unique.
+
+```
+Set<ID> accountIds = new
+  Set<ID>{'001d000000BOaHSAA1','001d000000BOaHTAA1'};
+List<Account> accounts = [SELECT Name
+  FROM Account WHERE Id IN :accountIds];
+```
+
+#### Maps
+
+```
+Map<Id, Account> accountMap = new Map<Id, Account>([SELECT Id, Name FROM Account]);
+```
+
+#### Visual Force
+
+- Visualforce is a framework for rendering HTML pages using an MVC paradigm.
+
+#### Additional Notes
+
+- Apex and Database are Tightly Coupled
+- Each standard or custom object in the database has a "mystical" representation via an Apex class
+- The class and its underlying object are essentially a mirror image of one another that is constantly in sync.
+- The platform works hard to ensure these dependencies and won't let the database schema and your code become
+  out of sync. Therefore, if you attempt to delete a custom object or a field that is referenced by Apex code, the platform will raise an error and disallow the action.
+- You must have 75% test coverage to deploy your Apex code to a production org.
+
+## Execution Context
+
+Method of Invoking Apex
+
+| Method                         | Description                                                                                                                                                                                                                     |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Database Trigger               | Invoked for a specific event on a custom or standard object.                                                                                                                                                                    |
+| Anonymous Apex                 | Code snippets executed on the fly in Dev Console & other tools.                                                                                                                                                                 |
+| Asynchronous Apex              | Occurs when executing a future or queueable Apex, running a batch job, or scheduling Apex to run at a specified interval.                                                                                                       |
+| Web Services                   | Code that is exposed via SOAP or REST web services.                                                                                                                                                                             |
+| Email Services                 | Code that is set up to process inbound email.                                                                                                                                                                                   |
+| Visualforce or Lightning Pages | Visualforce controllers and Lightning components can execute Apex code automatically or when a user initiates an action, such as clicking a button. Lightning components can also be executed by Lightning processes and flows. |
+
+Besides invoking Apex code, actions, such as creating a new task, sending an email, performing a field update, or sending an outbound message, can all be triggered by one of the declarative platform features. These actions also run within an execution context.
+
+By default, Apex executes in system context. Apex code has access to all objects and fields. Object permissions, field-level security, and sharing rules aren’t applied for the current user. You can use the with sharing keyword to specify that the sharing rules for the current user be taken into account for a class.
+
+## Trigger Essentials
+
+Similar to triggers in SQL Server, Apex database triggers execute programming logic before or after events to records in Salesforce.
