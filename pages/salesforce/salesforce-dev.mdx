@@ -75,3 +75,23 @@ When defining the trigger, you can specify more than one of the following events
 - after update
 - after delete
 - after undelete
+
+```
+trigger TriggerName on ObjectName (trigger_events) {
+   // code_block
+}
+```
+
+**You only want to resort to using a trigger when you are absolutely sure that the same thing cannot be accomplished with one of our point-and-click automation tools.**
+
+It's considered a best practice to use only one trigger per object, which you see in the following example. You can then use context-specific handler methods within triggers to create logic-less triggers. By adopting this practice, you can avoid the common pitfalls that new developers fall into.
+
+## Working with Limits
+
+The two limits you will probably be the most concerned with involve the number of **SOQL queries** or **DML statements**.
+
+## Record-Triggered flows
+
+Trigger = What Launched the flow
+Criteria = What conditions for the flow to launch (like a filter)
+Action = what the flow does
