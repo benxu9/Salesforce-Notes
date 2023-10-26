@@ -95,3 +95,69 @@ The two limits you will probably be the most concerned with involve the number o
 Trigger = What Launched the flow
 Criteria = What conditions for the flow to launch (like a filter)
 Action = what the flow does
+
+### record trigger flow options
+
+- FastField Update = before save updates
+- Related Records and actions = during and after saved
+  - crud records, subflows, actions, emails, post to chatter
+- Run Asynchronously = Immediately after the record update that triggered the flow is complete. Benefit: Avoids slowing down or blocking the record update that triggered the flow
+- Scheduled path = n the future, after the trigger has fired, based on dates and times. Followup reminder 2 months from now
+
+### Flow trigger explorer and Time-Based Workflow
+
+- use Flow trigger explorer to see types of flows, re-order flows, activate and deactivate
+- check for scehduled path flows in Time-based workflow setup page
+
+## Apex Basics & Databases
+
+### SOSL
+
+Salesforce Object Search Language (SOSL) is a Salesforce search language that is used to perform text
+searches in records. Use SOSL to search fields across multiple standard and custom object records in Salesforce. SOSL is similar to Apache Lucene.
+
+```
+String soslFindClause = 'Wingo OR SFDC';
+List<List<sObject>> searchList = [FIND :soslFindClause IN ALL FIELDS
+                    RETURNING Account(Name),Contact(FirstName,LastName,Department)];
+Account[] searchAccounts = (Account[])searchList[0];
+Contact[] searchContacts = (Contact[])searchList[1];
+```
+
+You can filter SOSL results by adding conditions in the WHERE clause for an object. For example, this results in only accounts whose industry is Apparel to be returned: RETURNING Account(Name, Industry WHERE Industry='Apparel').
+
+Likewise, ordering results for one sObject is supported by adding ORDER BY for an object. For example this causes the returned accounts to be ordered by the Name field: RETURNING Account(Name, Industry ORDER BY Name).
+
+The number of returned records can be limited to a subset of records. This example limits the returned accounts to 10 only: RETURNING Account(Name, Industry LIMIT 10).
+
+### triggers
+
+```
+trigger AddRelatedRecord on Account(after insert, after update) {
+    List<Opportunity> oppList = new List<Opportunity>();
+    // Add an opportunity for each account if it doesn't already have one.
+    // Iterate over accounts that are in this trigger but that don't have opportunities.
+    List<Account> toProcess = null;
+    switch on Trigger.operationType {
+        when AFTER_INSERT {
+        // All inserted Accounts will need the Opportunity, so there is no need to perform the query
+            toProcess = Trigger.New;
+        }
+        when AFTER_UPDATE {
+            toProcess = [SELECT Id,Name FROM Account
+                         WHERE Id IN :Trigger.New AND
+                         Id NOT IN (SELECT AccountId FROM Opportunity WHERE AccountId in :Trigger.New)];
+        }
+    }
+    for (Account a : toProcess) {
+        // Add a default opportunity for this account
+        oppList.add(new Opportunity(Name=a.Name + ' Opportunity',
+                                    StageName='Prospecting',
+                                    CloseDate=System.today().addMonths(1),
+                                    AccountId=a.Id));
+    }
+    if (oppList.size() > 0) {
+        insert oppList;
+    }
+}
+```
